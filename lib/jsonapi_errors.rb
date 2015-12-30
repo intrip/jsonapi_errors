@@ -1,5 +1,6 @@
-require "jsonapi_errors/version"
+require "JSONAPI_errors/version"
 
-module JsonapiErrors
-  # Your code goes here...
+require "JSONAPI_errors/rails/controller"
+
+module JSONAPIErrors
 end
