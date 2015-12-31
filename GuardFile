@@ -77,5 +77,6 @@ guard :rspec, cmd: "bundle exec rspec" do
 
   # Lib watch
   watch(%r{^lib/(.+)/(.+)/(.+).rb$})  { |m| ["spec/lib/#{m[1]}/#{m[2]}/#{m[3]}_spec.rb"] }
+  watch(%r{^lib/(.+)/(.+).rb$})  { |m| ["spec/lib/#{m[1]}/#{m[2]}_spec.rb"] }
 
 end
