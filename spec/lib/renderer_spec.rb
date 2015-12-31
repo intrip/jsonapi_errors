@@ -24,7 +24,7 @@ module JSONAPIErrors
       }
     }
     before do
-      Renderer::MATCHES = {
+      JSONAPIErrors::Configuration.matches = {
           "JSONAPIErrors::MatchedException" => matched_exception_data
       }
     end
