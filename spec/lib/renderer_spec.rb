@@ -32,7 +32,7 @@ module JSONAPIErrors
     describe "#render" do
       let (:render) { lambda { subject.render exception } }
       context 'exception not present in exception_matches' do
-        let(:exception) { Exception.new }
+        let(:exception) { StandardError.new }
         it 'raises an UnhandledException error' do
           expect{render.call}.to raise_error Errors::UnhandledException
         end
