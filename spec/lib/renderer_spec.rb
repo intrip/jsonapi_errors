@@ -32,9 +32,22 @@ module JSONAPIErrors
     describe "#render_h" do
       let (:render_h) { lambda { subject.render_h exception } }
       context 'exception not present in exception_matches' do
-        let(:exception) { StandardError.new }
-        it 'raises an UnhandledException error' do
-          expect{render_h.call}.to raise_error Errors::UnhandledException
+        let(:exception) { StandardError.new("msg") }
+        context 'catch_unhandled_exceptions == true' do
+          before {JSONAPIErrors::Configuration.catch_unhandled_exceptions = true}
+          it 'renders json containing the Unhandled exception data' do
+            expect(render_h.call).to eq({errors:
+                                             [{title: "Unhandled exception",
+                                               detail: "The Exception: StandardError msg. is not handled in configuration.matches.",
+                                               status: "500"}]
+                                        })
+          end
+        end
+        context 'catch_unhandled_exceptions == false' do
+          before {JSONAPIErrors::Configuration.catch_unhandled_exceptions = false}
+          it 'raises the exception up' do
+            expect{render_h.call}.to raise_error StandardError, "msg"
+          end
         end
       end
       context 'exception present in matches' do
