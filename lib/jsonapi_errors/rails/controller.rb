@@ -3,8 +3,6 @@ module JSONAPIErrors
     module Controller
       extend ActiveSupport::Concern
 
-      include Renderer
-
       included do
         rescue_from StandardError, with: :render_error
       end
@@ -12,7 +10,7 @@ module JSONAPIErrors
       #TODO set option to only and except for when using rescue_from
 
       def render_error(exception)
-        response_h = render_h(exception)
+        response_h = HashRenderer.new(exception).render
         render json: response_h, status: response_h[:status].to_i
       end
     end

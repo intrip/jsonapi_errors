@@ -4,7 +4,7 @@ require "active_support/core_ext/hash"
 require "active_support/core_ext/class/attribute"
 require "JSONAPI_errors/version"
 require "JSONAPI_errors/configuration"
-require "JSONAPI_errors/renderer"
+require "JSONAPI_errors/hash_renderer"
 require "JSONAPI_errors/rails/controller"
 
 module JSONAPIErrors

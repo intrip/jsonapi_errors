@@ -1,13 +1,9 @@
 require 'spec_helper'
 
 module JSONAPIErrors
-  class RendererImpl
-    include Renderer
-  end
-
   class MatchedException < StandardError;end
 
-  describe Renderer do
+  describe HashRenderer do
     let(:matched_exception_data) {
       {
           id: "1",
@@ -28,15 +24,19 @@ module JSONAPIErrors
           "JSONAPIErrors::MatchedException" => matched_exception_data
       }
     end
-    subject {RendererImpl.new}
-    describe "#render_h" do
-      let (:render_h) { lambda { subject.render_h exception } }
+    subject {HashRenderer.new(exception)}
+    let(:exception) { StandardError.new("msg") }
+    it 'has attr_reader for exception' do
+      expect(subject.exception).to eq exception
+    end
+
+    describe "#render" do
       context 'exception not present in exception_matches' do
         let(:exception) { StandardError.new("msg") }
         context 'catch_unhandled_exceptions == true' do
           before {JSONAPIErrors::Configuration.catch_unhandled_exceptions = true}
           it 'renders json containing the Unhandled exception data' do
-            expect(render_h.call).to eq({errors:
+            expect(subject.render).to eq({errors:
                                              [{title: "Unhandled exception",
                                                detail: "The Exception: StandardError msg. is not handled in configuration.matches.",
                                                status: "500"}]
@@ -46,7 +46,7 @@ module JSONAPIErrors
         context 'catch_unhandled_exceptions == false' do
           before {JSONAPIErrors::Configuration.catch_unhandled_exceptions = false}
           it 'raises the exception up' do
-            expect{render_h.call}.to raise_error StandardError, "msg"
+            expect{subject.render}.to raise_error StandardError, "msg"
           end
         end
       end
@@ -63,17 +63,16 @@ module JSONAPIErrors
 
           context 'status,description and title are overridden' do
             it 'renders error hash with the overridden values' do
-              expect(render_h.call).to eq({errors: [matched_exception_data]})
+              expect(subject.render).to eq({errors: [matched_exception_data]})
             end
           end
           context 'status,description and title are not overridden' do
             let(:matched_exception_data) { Hash.new }
             it 'renders error hash with status 500 title Exception class and detail exception message' do
-              expect(render_h.call).to eq({errors: [{title: "JSONAPIErrors::MatchedException", detail: "exception message", status: "500"}]})
+              expect(subject.render).to eq({errors: [{title: "JSONAPIErrors::MatchedException", detail: "exception message", status: "500"}]})
             end
           end
       end
-
     end
   end
 end

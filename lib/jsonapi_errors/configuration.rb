@@ -1,6 +1,7 @@
 module JSONAPIErrors
   class Configuration
-    # TODO create initialization into an intializer for rails
+    # TODO create rake task that creates a rails initializer
+    # TODO add all the default rails exception
     # all the exceptions matched
     cattr_accessor :matches do
       {
@@ -15,7 +16,7 @@ module JSONAPIErrors
     # if enabled return a json with unhandlex exception explanation
     # otherwise just raises the exception
     cattr_accessor :catch_unhandled_exceptions do
-      true
+      false
     end
 
     def self.configure
