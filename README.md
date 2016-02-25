@@ -23,6 +23,9 @@ Or install it yourself as:
 
     $ gem install JSONAPI_errors
 
+Then include JSONAPIErrors::Rails::Controller in your application_controller.rb or
+in the controllers where you need to enable the gem.
+
 ## Usage
 
 Add an element to the "JSONAPIErrors::Configuration.matches" hash for every exception error you need to handle.
