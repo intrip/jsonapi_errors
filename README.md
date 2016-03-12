@@ -184,6 +184,11 @@ end
 
 Put this file in a rails initializer in order to make it work as expected.
 
+
+## Code Status
+
+[![Build Status](https://travis-ci.org/rails/rails.svg?branch=master)](https://travis-ci.org/rails/rails)
+
 ## Contributing
 
 1. Fork it ( https://github.com/intrip/JSONAPI_errors/fork )
