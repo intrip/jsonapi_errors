@@ -187,7 +187,7 @@ Put this file in a rails initializer in order to make it work as expected.
 
 ## Code Status
 
-[![Build Status](https://travis-ci.org/rails/rails.svg?branch=master)](https://travis-ci.org/rails/rails)
+[![Build Status](https://travis-ci.org/intrip/jsonapi_errors.svg?branch=master)](https://github.com/intrip/jsonapi_errors)
 
 ## Contributing
 
